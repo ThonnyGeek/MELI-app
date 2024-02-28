@@ -49,6 +49,21 @@ enum NetworkErrorHandler: Error, Equatable {
         }
     }
     
+    var apiErrorDescription: APIError {
+        switch self {
+        case .APIError(let apiError):
+            return apiError
+        case .customError(let apiError):
+            return apiError
+        case .requestFailed, .tokenExpired, .unauthenticated, .invalidURL:
+            return .init(error: "", message: errorDescription ?? "")
+        case .normalError(let error):
+            return .init(error: "", message: error.localizedDescription)
+        case .emptyErrorWithStatusCode(let string):
+            return .init(error: "", message: string)
+        }
+    }
+    
     var id: UUID {
         return UUID()
     }
