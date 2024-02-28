@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct SearchBarView: View {
+    
+    @AppStorage("site_id") var siteIdAppStorage: String?
+    
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.mainYellow, .myPrimary, .myPrimary], startPoint: .top, endPoint: .bottom)
+            LinearGradient(colors: [.mainYellow, .myPrimary], startPoint: .top, endPoint: .center)
                 .ignoresSafeArea()
+            
+            Text("siteIdAppStorage: \(siteIdAppStorage ?? "")")
         }
     }
 }

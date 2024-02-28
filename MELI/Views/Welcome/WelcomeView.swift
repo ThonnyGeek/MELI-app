@@ -13,25 +13,34 @@ struct WelcomeView: View {
     
     @EnvironmentObject var inAppNotificationsViewModel: InAppNotificationsViewModel
     
+    /// Setting default site_id to Colombia
+    @AppStorage("site_id") var siteIdAppStorage: String = "MCO"
+    
     var body: some View {
-        ZStack {
+        NavigationStack {
             
-            Color.mainYellow
-                .ignoresSafeArea()
+            let _ = Self._printChanges()
             
-            VStack {
-                DownloadingImageView(url: "https://http2.mlstatic.com/frontend-assets/homes-palpatine/logo_homecom_v2.png", key: "logo_homecom_v2.png")
-                    .scaledToFit()
-                    .frame(width: 150)
+            ZStack {
                 
-                listView()
+                Color.mainYellow
+                    .ignoresSafeArea()
+                
+                VStack {
+                    DownloadingImageView(url: "https://http2.mlstatic.com/frontend-assets/homes-palpatine/logo_homecom_v2.png", key: "logo_homecom_v2.png")
+                        .scaledToFit()
+                        .frame(width: 150)
+                    
+                    listView()
+                }
+                
             }
-            
         }
-        .onChange(of: viewModel.lastApiError) { oldValue, newValue in
-//                newValue
-            
-        }
+        .onReceive(viewModel.$lastApiError, perform: { apiError in
+            guard let apiError = apiError else { return }
+            print("apiError: \(apiError)")
+            inAppNotificationsViewModel.showError(apiError.apiErrorDescription.error, subtitle: apiError.apiErrorDescription.message)
+        })
         .overlay {
             InAppNotificationsView()
         }
@@ -39,52 +48,51 @@ struct WelcomeView: View {
     
     @ViewBuilder
     private func listView() -> some View {
-        ScrollView {
-            VStack {
-                ForEach(viewModel.sites, id: \.self) { site in
-                    Button {
-                    } label: {
-                        listButton(site.name, image: site.id.dropFirst().description) {}
+        if !viewModel.sites.isEmpty {
+            ScrollView {
+                VStack {
+                    ForEach(viewModel.sites, id: \.self) { site in
+                        
+                        NavigationLink(destination: SearchBarView().onAppear {siteIdAppStorage = site.id}) {
+                            listButton(site.name, image: site.id.dropFirst().description)
+                        }
+
+                        
+                        if site != viewModel.sites.last {
+                            Divider()
+                        }
+                        
                     }
-                    
-                    
-                    if site != viewModel.sites.last {
-                        Divider()
-                    }
-                    
                 }
             }
+            .padding(10)
+            .background {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.white)
+            }
+            .padding(20)
+
         }
-        .padding(10)
-        .background {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.white)
-        }
-        .padding(20)
     }
     
     @ViewBuilder
-    private func listButton(_ text: String, image: String, onTap: @escaping () -> Void) -> some View {
-        Button {
-            onTap()
-        } label: {
-            HStack {
+    private func listButton(_ text: String, image: String) -> some View {
+        HStack {
+            
+            HStack (spacing: 10) {
+                Image("\(image)")
                 
-                HStack (spacing: 10) {
-                    Image("\(image)")
-                    
-                    Text("\(text)")
-                        .foregroundStyle(.black)
-                }
-                
-                Spacer()
-                
-                Image(systemName: "chevron.right")
-                    .opacity(0.5)
+                Text("\(text)")
+                    .foregroundStyle(.black)
             }
-            .foregroundStyle(.black)
-            .padding(10)
+            
+            Spacer()
+            
+            Image(systemName: "chevron.right")
+                .opacity(0.5)
         }
+        .foregroundStyle(.black)
+        .padding(10)
     }
 }
 

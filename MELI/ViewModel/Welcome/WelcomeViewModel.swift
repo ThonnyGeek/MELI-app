@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 final class WelcomeViewModel: ObservableObject {
     
@@ -22,8 +23,11 @@ final class WelcomeViewModel: ObservableObject {
     
     //MARK: init
     init() {
-        fetchSites { apiError in
-            self.lastApiError = apiError
+        /// Adding startup "animation": Waits 1 sec to make the call
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.fetchSites { apiError in
+                self.lastApiError = apiError
+            }
         }
     }
     
@@ -38,7 +42,7 @@ final class WelcomeViewModel: ObservableObject {
                 onFail(apiError)
             } receiveValue: { [weak self] sitesValue in
                 guard let self = self else { return }
-                DispatchQueue.main.async {
+                withAnimation {
                     self.sites = sitesValue
                 }
             }
