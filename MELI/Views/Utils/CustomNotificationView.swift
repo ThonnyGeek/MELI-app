@@ -7,11 +7,6 @@
 
 import SwiftUI
 
-enum CNTheme {
-    case success
-    case error
-}
-
 struct CustomNotificationView: View {
     let text: LocalizedStringKey
     var subtitle: LocalizedStringKey?

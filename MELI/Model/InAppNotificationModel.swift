@@ -19,3 +19,8 @@ struct InAppNotificationModel: Identifiable {
         self.theme = theme
     }
 }
+
+enum CNTheme {
+    case success
+    case error
+}
