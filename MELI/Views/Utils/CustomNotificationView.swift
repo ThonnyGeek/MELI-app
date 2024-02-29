@@ -41,13 +41,12 @@ struct CustomNotificationView: View {
                 
                 VStack (alignment: .leading, spacing: 5) {
                     Text(text)
-//                        .font(.poppinsMedium(14))
-                        .font(.system(.caption))
+                        .font(.manropeMedium(14))
                         .lineLimit(2)
                     
                     if let subtitle = subtitle {
                         Text(subtitle)
-//                            .font(.poppinsMedium(12))
+                            .font(.manropeMedium(12))
                             .lineLimit(3)
                     }
                 }
