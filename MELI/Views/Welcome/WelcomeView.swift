@@ -53,7 +53,7 @@ struct WelcomeView: View {
                 VStack {
                     ForEach(viewModel.sites, id: \.self) { site in
                         
-                        NavigationLink(destination: SearchBarView().onAppear {siteIdAppStorage = site.id}) {
+                        NavigationLink(destination: SearchBarView().navigationBarBackButtonHidden().onAppear {siteIdAppStorage = site.id}) {
                             listButton(site.name, image: site.id.dropFirst().description)
                         }
 

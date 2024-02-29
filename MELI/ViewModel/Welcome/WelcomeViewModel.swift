@@ -35,7 +35,7 @@ final class WelcomeViewModel: ObservableObject {
     func fetchSites(onFail: ((_ apiError: NetworkErrorHandler) -> Void)? = nil) {
         print("viewModel.fetchSites()")
         welcomeServices.fetchSites()
-            .sink { (completion) in
+            .sink { completion in
                 guard let apiError = API.shared.onReceive(completion), let onFail = onFail else {
                     return
                 }

@@ -47,7 +47,14 @@ final class ImageLoadingViewModel: ObservableObject {
         
         isLoading = true
         
-        guard let url = URL(string: urlString), !urlString.isEmpty/*, url.scheme != nil, url.host != nil*/
+        var urlStringToModify = self.urlString
+        
+        if urlStringToModify.lowercased().hasPrefix("http://") {
+            // Reemplazar "http://" por "https://"
+            urlStringToModify = urlString.replacingOccurrences(of: "http://", with: "https://")
+        }
+        
+        guard let url = URL(string: urlStringToModify), !urlStringToModify.isEmpty/*, url.scheme != nil, url.host != nil*/
         else {
             isLoading = false
             image = UIImage(systemName: "photo.fill")
@@ -57,7 +64,7 @@ final class ImageLoadingViewModel: ObservableObject {
         URLSession.shared.dataTaskPublisher(for: url)
             .map { UIImage(data: $0.data) }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] (_) in
+            .sink { [weak self] _ in
                 self?.isLoading = false
             } receiveValue: { [weak self] (returnedImage) in
                 guard
