@@ -56,7 +56,6 @@ struct WelcomeView: View {
                         NavigationLink(destination: SearchBarView().navigationBarBackButtonHidden().onAppear {siteIdAppStorage = site.id}) {
                             listButton(site.name, image: site.id.dropFirst().description)
                         }
-
                         
                         if site != viewModel.sites.last {
                             Divider()

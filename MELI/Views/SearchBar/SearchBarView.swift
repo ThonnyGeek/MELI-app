@@ -49,6 +49,9 @@ struct SearchBarView: View {
                 }
             }
         }
+        .onReceive(viewModel.$isLoading, perform: { isLoading in
+            inAppNotificationsViewModel.showLoadingView = isLoading
+        })
     }
     
     @ViewBuilder

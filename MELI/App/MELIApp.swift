@@ -18,6 +18,8 @@ struct MELIApp: App {
             WelcomeView()
                 .overlay {
                     InAppNotificationsView()
+                    
+                    LoadingView(show: inAppNotificationsViewModel.showLoadingView)
                 }
                 .environmentObject(inAppNotificationsViewModel)
         }

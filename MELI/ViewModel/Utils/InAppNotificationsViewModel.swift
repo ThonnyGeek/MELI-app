@@ -38,6 +38,8 @@ final class InAppNotificationsViewModel: ObservableObject {
     @Published var dragGestureValueFirst: Double = 0.0
     @Published var dragGestureValueSecond: Double = 0.0
     
+    @Published var showLoadingView: Bool = false
+    
     private var subscriptions = Set<AnyCancellable>()
     
     //MARK: Constants

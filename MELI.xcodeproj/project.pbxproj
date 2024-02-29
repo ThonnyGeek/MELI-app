@@ -47,6 +47,7 @@
 		851A71012B8EEDD30009A488 /* InAppNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A70FF2B8EEDD30009A488 /* InAppNotificationModel.swift */; };
 		851A71042B8EFDE10009A488 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A71032B8EFDE10009A488 /* SearchBarView.swift */; };
 		851A71052B8EFDE10009A488 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A71032B8EFDE10009A488 /* SearchBarView.swift */; };
+		857D7A762B91245D00702C77 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D7A752B91245D00702C77 /* LoadingView.swift */; };
 		85DB133B2B8FFD3400715E1C /* SearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DB133A2B8FFD3400715E1C /* SearchBarViewModel.swift */; };
 		85DB133C2B8FFD3400715E1C /* SearchBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DB133A2B8FFD3400715E1C /* SearchBarViewModel.swift */; };
 		85DB133E2B8FFD8500715E1C /* MainAppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DB133D2B8FFD8500715E1C /* MainAppRouter.swift */; };
@@ -110,6 +111,7 @@
 		851A70FC2B8EED9B0009A488 /* InAppNotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppNotificationsViewModel.swift; sourceTree = "<group>"; };
 		851A70FF2B8EEDD30009A488 /* InAppNotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppNotificationModel.swift; sourceTree = "<group>"; };
 		851A71032B8EFDE10009A488 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		857D7A752B91245D00702C77 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		85DB133A2B8FFD3400715E1C /* SearchBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarViewModel.swift; sourceTree = "<group>"; };
 		85DB133D2B8FFD8500715E1C /* MainAppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppRouter.swift; sourceTree = "<group>"; };
 		85DB13402B90005100715E1C /* MainAppService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppService.swift; sourceTree = "<group>"; };
@@ -283,6 +285,7 @@
 				851A70D12B8ED8430009A488 /* DownloadingImageView.swift */,
 				851A70F82B8EEC8E0009A488 /* InAppNotificationsView.swift */,
 				851A70FA2B8EECC00009A488 /* CustomNotificationView.swift */,
+				857D7A752B91245D00702C77 /* LoadingView.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				851A70D22B8ED8430009A488 /* DownloadingImageView.swift in Sources */,
 				851A709E2B8EBE830009A488 /* MELI.xcdatamodeld in Sources */,
 				851A70D62B8ED87B0009A488 /* ImageLoadingViewModel.swift in Sources */,
+				857D7A762B91245D00702C77 /* LoadingView.swift in Sources */,
 				851A70CD2B8ED5610009A488 /* SitesModel.swift in Sources */,
 				851A709B2B8EBE830009A488 /* Persistence.swift in Sources */,
 				85DB13532B9032E600715E1C /* Font+Extension.swift in Sources */,

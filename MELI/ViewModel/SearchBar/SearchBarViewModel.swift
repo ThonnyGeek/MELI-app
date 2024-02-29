@@ -14,6 +14,7 @@ final class SearchBarViewModel: ObservableObject {
     //MARK: Variables
     @Published var searchBarText: String = ""
     @Published var searchItemsResults: [Result] = []
+    @Published var isLoading: Bool = false
     
     //MARK: Constants
     let mainAppService: MainAppService = MainAppService()
@@ -23,13 +24,20 @@ final class SearchBarViewModel: ObservableObject {
     
     //MARK: Functions
     func fetchSearchItems(onFail: ((_ apiError: NetworkErrorHandler) -> Void)? = nil) {
+        isLoading = true
         mainAppService.fetchSearchItems(query: searchBarText)
-            .sink { completion in
+            .sink { [weak self] completion in
+                
+                self?.isLoading = false
+                
                 guard let apiError = API.shared.onReceive(completion), let onFail = onFail else {
                     return
                 }
                 onFail(apiError)
             } receiveValue: { [weak self] returnedSearchItemsModel in
+                
+                self?.isLoading = false
+                
                 print("returnedSearchItemsModel: \(returnedSearchItemsModel)")
                 guard let self = self, let returnedSearchItemsModelResults = returnedSearchItemsModel.results else {
                     print("ERROR")
