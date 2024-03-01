@@ -32,6 +32,12 @@ struct WelcomeView: View {
                         .frame(width: 150)
                     
                     listView()
+                    
+                    if viewModel.showReloadButton {
+                        ReloadButton {
+                            viewModel.fetchSites()
+                        }
+                    }
                 }
                 
             }

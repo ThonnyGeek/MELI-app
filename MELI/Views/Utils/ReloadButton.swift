@@ -8,11 +8,29 @@
 import SwiftUI
 
 struct ReloadButton: View {
+    
+    let onTapAction: () -> Void
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        let screenSize: CGRect = (UIScreen.current?.bounds ?? UIScreen.main.bounds)
+        
+        Button {
+            onTapAction()
+        } label: {
+            HStack {
+                Image(systemName: "arrow.triangle.2.circlepath.circle")
+                
+                Text("Recargar")
+            }
+        }
+        .buttonStyle(MELIMainButtonStyle())
+        .frame(width: screenSize.width * 0.4)
     }
 }
 
 #Preview {
-    ReloadButton()
+    ReloadButton {
+        
+    }
 }

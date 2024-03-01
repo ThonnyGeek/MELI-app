@@ -16,6 +16,8 @@ final class WelcomeViewModel: ObservableObject {
     
     @Published var lastApiError: NetworkErrorHandler?
     
+    @Published var showReloadButton: Bool = false
+    
     private var cancellables = Set<AnyCancellable>()
     
     //MARK: Constants
@@ -25,25 +27,23 @@ final class WelcomeViewModel: ObservableObject {
     init() {
         /// Adding startup "animation": Waits 1 sec to make the call
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.fetchSites { apiError in
-                self.lastApiError = apiError
-            }
+            self.fetchSites()
         }
     }
     
     //MARK: Functions
-    func fetchSites(onFail: ((_ apiError: NetworkErrorHandler) -> Void)? = nil) {
+    func fetchSites() {
         print("viewModel.fetchSites()")
         welcomeServices.fetchSites()
-            .sink { completion in
-                guard let apiError = API.shared.onReceive(completion), let onFail = onFail else {
+            .sink { [weak self] completion in
+                guard let apiError = API.shared.onReceive(completion) else {
                     return
                 }
-                onFail(apiError)
+                self?.lastApiError = apiError
             } receiveValue: { [weak self] sitesValue in
                 guard let self = self else { return }
                 withAnimation {
-                    self.sites = sitesValue
+                    self.sites = sitesValue.sorted { $0.name < $1.name }
                 }
             }
             .store(in: &cancellables)
