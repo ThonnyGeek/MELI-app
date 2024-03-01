@@ -15,6 +15,7 @@ final class SearchBarViewModel: ObservableObject {
     @Published var searchBarText: String = ""
     @Published var searchItemsResults: [Result] = []
     @Published var isLoading: Bool = false
+    @Published var pagingResults: Paging = Paging(total: 0, primaryResults: 0, offset: 0, limit: 50)
     
     //MARK: Constants
     let mainAppService: MainAppService = MainAppService()
@@ -44,16 +45,58 @@ final class SearchBarViewModel: ObservableObject {
                     return
                 }
                 
+                self.pagingResults = returnedSearchItemsModel.paging
+                
                 if returnedSearchItemsModelResults.isEmpty, let onFail = onFail {
                     onFail(NetworkErrorHandler.customError(APIError(error: "Búsqueda sin resultados", message: "Por favor intenta con otra palabra")))
-                } else {   
+                } else {
                     withAnimation {
                         self.searchItemsResults = returnedSearchItemsModelResults
                     }
                 }
             }
             .store(in: &cancellables)
-
+        
+    }
+    
+    func loadMoreSearchItems(onFail: ((_ apiError: NetworkErrorHandler) -> Void)? = nil) {
+        
+        var offset = 0
+        
+        if pagingResults.offset == 0 {
+            offset = 50
+        } else {
+            offset = pagingResults.offset + 50
+        }
+        print("query: \(searchBarText), offset: \(offset)")
+        print("pagingResults: \(pagingResults)")
+        print("searchItemsResults.count: \(searchItemsResults.count)")
+        
+        
+        mainAppService.loadMoreSearchItems(query: searchBarText, offset: "\(offset)")
+            .sink { completion in
+                guard let apiError = API.shared.onReceive(completion), let onFail = onFail else {
+                    return
+                }
+                onFail(apiError)
+            } receiveValue: { [weak self] returnedSearchItemsModel in
+                guard let self = self, let returnedSearchItemsModelResults = returnedSearchItemsModel.results else {
+                    print("ERROR")
+                    return
+                }
+                
+                if returnedSearchItemsModelResults.isEmpty, let onFail = onFail {
+                    onFail(NetworkErrorHandler.customError(APIError(error: "Búsqueda sin resultados", message: "Por favor intenta con otra palabra")))
+                } else {
+                    withAnimation {
+                        self.searchItemsResults.append(contentsOf: returnedSearchItemsModelResults)
+                    }
+                    
+                    self.pagingResults = returnedSearchItemsModel.paging
+                }
+            }
+            .store(in: &cancellables)
+        
     }
     
     func formatAsMoney(_ number: Double) -> String {
@@ -64,7 +107,7 @@ final class SearchBarViewModel: ObservableObject {
         guard let result = formatter.string(from: NSNumber(value: number)) else {
             return number.description
         }
-
+        
         return result
     }
     

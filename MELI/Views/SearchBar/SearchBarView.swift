@@ -19,8 +19,8 @@ struct SearchBarView: View {
     
     var body: some View {
         ZStack {
-                        LinearGradient(colors: [.mainYellow, .myPrimary], startPoint: .top, endPoint: .center)
-                            .ignoresSafeArea()
+            LinearGradient(colors: [.mainYellow, .myPrimary], startPoint: .top, endPoint: .center)
+                .ignoresSafeArea()
             
             VStack {
                 searchBarView()
@@ -120,7 +120,6 @@ struct SearchBarView: View {
     fileprivate func seachItemsListView() -> some View {
         GeometryReader { geometry in
             ScrollView {
-                
                 Group {
                     LinearGradient(colors: [.black.opacity(0.1), .black.opacity(0.05), .black.opacity(0)], startPoint: .top, endPoint: .bottom)
                         .frame(height: 25)
@@ -134,6 +133,16 @@ struct SearchBarView: View {
                                 Divider()
                             }
                         }
+                        
+                        if viewModel.pagingResults.offset <= 1000 && viewModel.searchItemsResults.count < viewModel.pagingResults.total {
+                            ProgressView()
+                                .frame(maxWidth: .infinity)
+                                .onAppear {
+                                    viewModel.loadMoreSearchItems { apiError in
+                                        inAppNotificationsViewModel.showError(apiError.apiErrorDescription.error, subtitle: apiError.apiErrorDescription.message)
+                                    }
+                                }
+                        }
                     }
                     .frame(maxHeight: .infinity)
                     .frame(width: geometry.size.width * 0.9)
@@ -143,6 +152,7 @@ struct SearchBarView: View {
                 .frame(maxHeight: .infinity)
                 .background(Color.white)
             }
+            .scrollIndicators(.visible)
         }
         .background {
             Color.white
@@ -194,7 +204,7 @@ struct SearchBarView: View {
 }
 
 #Preview {
-//    SearchBarView()/*.seachItemsListView()*/
+//    SearchBarView().seachItemsListView()
         WelcomeView()
         .environmentObject(InAppNotificationsViewModel())
 }
