@@ -17,6 +17,8 @@ struct SearchBarView: View {
     
     @Environment(\.dismiss) fileprivate var dismiss
     
+    @State var sheetContentHeight = CGFloat(500)
+    
     var body: some View {
         ZStack {
             LinearGradient(colors: [.mainYellow, .myPrimary], startPoint: .top, endPoint: .center)
@@ -53,17 +55,7 @@ struct SearchBarView: View {
             inAppNotificationsViewModel.showLoadingView = isLoading
         })
         .sheet(item: $viewModel.itemDetail) { item in
-            ItemDetailView(itemData: item)
-                .background {
-                    GeometryReader { proxy in
-                        Color.clear
-                            .task {
-                                print("size = \(proxy.size.height)")
-                                    viewModel.sheetContentHeight = proxy.size.height
-                            }
-                    }
-                }
-                .presentationDetents([.height(viewModel.sheetContentHeight)])
+            ItemDetailView(itemData: item) 
         }
     }
     
@@ -103,7 +95,8 @@ struct SearchBarView: View {
             .padding(10)
             
             if viewModel.searchItemsResults.isEmpty {
-                Button {
+                
+                Button("Buscar") {
                     viewModel.hideKeyboard()
                     
                     if !viewModel.searchBarText.isEmpty {
@@ -113,18 +106,8 @@ struct SearchBarView: View {
                     } else {
                         inAppNotificationsViewModel.showError("Campo vacío", subtitle: "El campo de búsqueda debe contener al menos 1 caracter")
                     }
-                } label: {
-                    Text("Buscar")
-                        .font(.manropeBold(16))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 15)
-                        .background {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundStyle(.mainBlue)
-                        }
-                        .padding(10)
                 }
+                .buttonStyle(MELIMainButtonStyle())
             }
         }
     }
