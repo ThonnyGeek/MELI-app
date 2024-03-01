@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		851A70922B8EBE820009A488 /* MELIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A70912B8EBE820009A488 /* MELIApp.swift */; };
-		851A70942B8EBE820009A488 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A70932B8EBE820009A488 /* ContentView.swift */; };
 		851A70962B8EBE830009A488 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 851A70952B8EBE830009A488 /* Assets.xcassets */; };
 		851A70992B8EBE830009A488 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 851A70982B8EBE830009A488 /* Preview Assets.xcassets */; };
 		851A709B2B8EBE830009A488 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A709A2B8EBE830009A488 /* Persistence.swift */; };
@@ -46,6 +45,9 @@
 		851A71002B8EEDD30009A488 /* InAppNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A70FF2B8EEDD30009A488 /* InAppNotificationModel.swift */; };
 		851A71012B8EEDD30009A488 /* InAppNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A70FF2B8EEDD30009A488 /* InAppNotificationModel.swift */; };
 		853F5FEF2B919AA000F23A2A /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FEE2B919AA000F23A2A /* SearchBarView.swift */; };
+		853F5FF12B91AB1200F23A2A /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FF02B91AB1200F23A2A /* UIWindow.swift */; };
+		853F5FF32B92924C00F23A2A /* MELIMainButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FF22B92924C00F23A2A /* MELIMainButtonStyle.swift */; };
+		853F5FF52B9297F800F23A2A /* ReloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FF42B9297F800F23A2A /* ReloadButton.swift */; };
 		857D7A762B91245D00702C77 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D7A752B91245D00702C77 /* LoadingView.swift */; };
 		857D7A792B9177FA00702C77 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D7A782B9177FA00702C77 /* ItemDetailView.swift */; };
 		857D7A7D2B917B1B00702C77 /* ItemDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D7A7C2B917B1B00702C77 /* ItemDetailViewModel.swift */; };
@@ -85,7 +87,6 @@
 /* Begin PBXFileReference section */
 		851A708E2B8EBE820009A488 /* MELI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MELI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		851A70912B8EBE820009A488 /* MELIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MELIApp.swift; sourceTree = "<group>"; };
-		851A70932B8EBE820009A488 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		851A70952B8EBE830009A488 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		851A70982B8EBE830009A488 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		851A709A2B8EBE830009A488 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -112,6 +113,9 @@
 		851A70FC2B8EED9B0009A488 /* InAppNotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppNotificationsViewModel.swift; sourceTree = "<group>"; };
 		851A70FF2B8EEDD30009A488 /* InAppNotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppNotificationModel.swift; sourceTree = "<group>"; };
 		853F5FEE2B919AA000F23A2A /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		853F5FF02B91AB1200F23A2A /* UIWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindow.swift; sourceTree = "<group>"; };
+		853F5FF22B92924C00F23A2A /* MELIMainButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MELIMainButtonStyle.swift; sourceTree = "<group>"; };
+		853F5FF42B9297F800F23A2A /* ReloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadButton.swift; sourceTree = "<group>"; };
 		857D7A752B91245D00702C77 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		857D7A782B9177FA00702C77 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		857D7A7C2B917B1B00702C77 /* ItemDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailViewModel.swift; sourceTree = "<group>"; };
@@ -222,7 +226,6 @@
 				851A71022B8EFDCA0009A488 /* SearchBar */,
 				851A70D02B8ED81F0009A488 /* Utils */,
 				851A70CF2B8ED81A0009A488 /* Welcome */,
-				851A70932B8EBE820009A488 /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			children = (
 				851A70ED2B8EDE1D0009A488 /* Date+Extension.swift */,
 				85DB13522B9032E600715E1C /* Font+Extension.swift */,
+				853F5FF02B91AB1200F23A2A /* UIWindow.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -290,6 +294,8 @@
 				851A70F82B8EEC8E0009A488 /* InAppNotificationsView.swift */,
 				851A70FA2B8EECC00009A488 /* CustomNotificationView.swift */,
 				857D7A752B91245D00702C77 /* LoadingView.swift */,
+				853F5FF22B92924C00F23A2A /* MELIMainButtonStyle.swift */,
+				853F5FF42B9297F800F23A2A /* ReloadButton.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -545,6 +551,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				853F5FF52B9297F800F23A2A /* ReloadButton.swift in Sources */,
 				851A70C22B8EBFDA0009A488 /* WelcomeView.swift in Sources */,
 				851A70DE2B8ED9E80009A488 /* WelcomeViewModel.swift in Sources */,
 				851A70F22B8EE2350009A488 /* NetworkRouter.swift in Sources */,
@@ -560,7 +567,6 @@
 				85DB13532B9032E600715E1C /* Font+Extension.swift in Sources */,
 				85DB133B2B8FFD3400715E1C /* SearchBarViewModel.swift in Sources */,
 				851A70EB2B8EDDC20009A488 /* API.swift in Sources */,
-				851A70942B8EBE820009A488 /* ContentView.swift in Sources */,
 				857D7A792B9177FA00702C77 /* ItemDetailView.swift in Sources */,
 				85DB13412B90005100715E1C /* MainAppService.swift in Sources */,
 				853F5FEF2B919AA000F23A2A /* SearchBarView.swift in Sources */,
@@ -572,7 +578,9 @@
 				851A70FD2B8EED9B0009A488 /* InAppNotificationsViewModel.swift in Sources */,
 				851A70F92B8EEC8E0009A488 /* InAppNotificationsView.swift in Sources */,
 				85DB133E2B8FFD8500715E1C /* MainAppRouter.swift in Sources */,
+				853F5FF12B91AB1200F23A2A /* UIWindow.swift in Sources */,
 				851A70FB2B8EECC00009A488 /* CustomNotificationView.swift in Sources */,
+				853F5FF32B92924C00F23A2A /* MELIMainButtonStyle.swift in Sources */,
 				851A70E32B8EDA700009A488 /* WelcomeServices.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

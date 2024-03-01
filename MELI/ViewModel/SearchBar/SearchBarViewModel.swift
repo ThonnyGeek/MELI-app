@@ -16,7 +16,7 @@ final class SearchBarViewModel: ObservableObject {
     @Published var searchItemsResults: [Result] = []
     @Published var isLoading: Bool = false
     @Published var pagingResults: Paging = Paging(total: 0, primaryResults: 0, offset: 0, limit: 50)
-    @Published var itemDetail: Result?
+    @Published var itemDetail: Result?// = Result(id: "", title: "Aspple iPhone 11 (128 Gb) - Blanco Apple iPhone 11 (128 Gb) - Blanco Apple iPhone 11 (128 Gb) - Blanco Apple iPhone 11 (128 Gb) - Blanco", condition: "new", thumbnailID: "", thumbnail: "http://http2.mlstatic.com/D_904849-MLA46153369025_052021-I.jpg", price: 2454900, originalPrice: 3506900, shipping: Shipping(storePickUp: nil, freeShipping: true, logisticType: "", mode: "", tags: nil), installments: Installments(quantity: 12, amount: 204575, rate: 0, currencyID: "COP"), attributes: [Attribute(id: "ITEM_CONDITION", name: "Condición del itesdfdfsfsdfsdfsdfsdfsm", valueName: "Nuevo"), Attribute(id: "ITEM_CONDITION2", name: "Condición del item2", valueName: "Nuevo2"), Attribute(id: "ITEM_CONDITION3", name: "Condición3", valueName: "Nuevo3")])
     
     @Published var sheetContentHeight = CGFloat(0)
     

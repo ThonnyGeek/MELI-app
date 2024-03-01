@@ -9,8 +9,6 @@ import SwiftUI
 
 @main
 struct MELIApp: App {
-    let persistenceController = PersistenceController.shared
-    
     @StateObject var inAppNotificationsViewModel: InAppNotificationsViewModel = InAppNotificationsViewModel()
 
     var body: some Scene {

@@ -13,6 +13,8 @@ struct ItemDetailView: View {
     
     @StateObject var viewModel: ItemDetailViewModel = ItemDetailViewModel()
     
+    let screenSize: CGRect = (UIScreen.current?.bounds ?? UIScreen.main.bounds)
+    
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -20,46 +22,68 @@ struct ItemDetailView: View {
             Color.white
                 .ignoresSafeArea()
             
-            VStack (spacing: 20) {
-                VStack (alignment: .leading) {
-                    title
-                }
-                
-                HStack {
-                    DownloadingImageView(url: itemData.thumbnail ?? "", key: itemData.thumbnailID ?? "")
-                        .scaledToFit()
-                        .frame(width: 130, height: 130)
+            ScrollView {
+                VStack (spacing: 20) {
                     
-                    Spacer()
+                    VStack (alignment: .leading) {
+                        title
+                    }
+                    .padding(20)
                     
-                    VStack (spacing: 20) {
-                        if let condition = itemData.condition {
-                            Text(condition == "new" ? "Nuevo" : "Usado")
-                                .font(.manropeExtraLight(16))
-                                .foregroundStyle(.black.opacity(0.7))
-                                .padding(.horizontal, 30)
-                        }
+                    HStack {
+                        DownloadingImageView(url: itemData.thumbnail ?? "", key: itemData.thumbnailID ?? "")
+                            .scaledToFit()
+                            .frame(width: 130, height: 130)
                         
-                        if let freeShipping = itemData.shipping?.freeShipping, freeShipping {
-                            Text("Envío gratis")
-                                .font(.manropeRegular(16))
-                                .foregroundStyle(Color.mainGreen)
-                                .padding(5)
-                                .background {
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(Color.mainGreen.opacity(0.15))
-                                }
+                        Spacer()
+                        
+                        VStack (spacing: 20) {
+                            if let condition = itemData.condition {
+                                Text(condition == "new" ? "Nuevo" : "Usado")
+                                    .font(.manropeExtraLight(16))
+                                    .foregroundStyle(.black.opacity(0.7))
+                                    .padding(5)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .fill(Color.myPrimary.opacity(0.15))
+                                    }
+                                    .padding(.horizontal, 30)
+                            }
+                            
+                            if let freeShipping = itemData.shipping?.freeShipping, freeShipping {
+                                Text("Envío gratis")
+                                    .font(.manropeRegular(16))
+                                    .foregroundStyle(Color.mainGreen)
+                                    .padding(5)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .fill(Color.mainGreen.opacity(0.15))
+                                    }
+                            }
                         }
                     }
+                    .padding(.horizontal, 50)
+                    
+                    priceSection
+                    
+                    if let attributes = itemData.attributes {
+                        attributesListView(attributes: attributes)
+                    } else {
+                        Text("Without attributes: \(itemData.attributes?.count ?? 0)")
+                            .foregroundStyle(.red)
+                    }
                 }
-                .padding(.horizontal, 50)
-                
-                priceSection
-                
-                buyButton()
+                .padding(.horizontal, 10)
+                .padding(.top, 30)
+                .padding(.bottom, 80)
             }
-            .padding(.horizontal, 10)
-            .padding(.top, 30)
+            
+            Button("Continuar") {
+                dismiss()
+            }
+            .frame(width: screenSize.width * 0.9)
+            .buttonStyle(MELIMainButtonStyle())
+            .frame(maxHeight: .infinity, alignment: .bottom)
         }
     }
     
@@ -92,13 +116,14 @@ struct ItemDetailView: View {
                         .foregroundStyle(Color.mainGreen)
                 }
             }
-            .padding()
-            .frame(maxWidth: .infinity)
+            .padding(20)
+            .padding(.horizontal, 10)
             .background {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(.mainGreen)
                     .opacity(0.06)
             }
+            .frame(maxWidth: .infinity)
             
             if let quantity = itemData.installments?.quantity, let amount = itemData.installments?.amount {
                 installmentsSection(installmentsCount: quantity, installmentsAmount: amount)
@@ -114,49 +139,72 @@ struct ItemDetailView: View {
         }
     }
     
+    @State var size: CGSize = .zero
+    
     @ViewBuilder
-    private func buyButton() -> some View {
-        Button {
-            dismiss()
-        } label: {
-            Text("Comprar ahora")
-                .font(.manropeBold(16))
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 15)
-                .background {
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundStyle(.mainBlue)
+    fileprivate func attributesListView(attributes: [Attribute]) -> some View {
+        VStack (spacing: 5) {
+            ForEach(attributes, id: \.self) { attribute in
+                if let name = attribute.name, let valueName = attribute.valueName {
+                    attributeView(name: name, valueName: valueName)
                 }
-                .padding(10)
-                .padding(.vertical, 50)
+            }
+        }
+        .padding(5)
+        .background {
+            RoundedRectangle(cornerRadius: 10.0)
+                .stroke(lineWidth: 0.2)
+        }
+        .frame(maxWidth: screenSize.width * 0.9)
+        .frame(width: screenSize.width)
+    }
+    
+    fileprivate func attributeView(name: String, valueName: String) -> some View {
+        HStack (spacing: 20) {
+            Text(name)
+                .font(.manropeSemiBold(14))
+                .foregroundStyle(.black)
+                .lineLimit(1)
+                .frame(maxWidth: screenSize.width * 0.6, alignment: .leading)
+            Divider()
+            
+            Text(valueName)
+                .font(.manropeSemiBold(14))
+                .foregroundStyle(.black)
+                .lineLimit(1)
+                .frame(maxWidth: screenSize.width * 0.4, alignment: .leading)
+        }
+        .padding(.vertical, 5)
+        .padding(.horizontal, 20)
+        .frame(maxWidth: screenSize.width)
+        .background {
+            RoundedRectangle(cornerRadius: 5)
+                .fill(.myPrimary)
         }
     }
 }
 
 struct ItemDetailViewPreview: View {
     
-    let item = Result(id: "", title: "Apple iPhone 11 (128 Gb) - Blanco Apple iPhone 11 (128 Gb) - Blanco Apple iPhone 11 (128 Gb) - Blanco Apple iPhone 11 (128 Gb) - Blanco", condition: "new", thumbnailID: "", thumbnail: "http://http2.mlstatic.com/D_904849-MLA46153369025_052021-I.jpg", price: 2454900, originalPrice: 3506900, shipping: Shipping(storePickUp: nil, freeShipping: true, logisticType: "", mode: "", tags: nil), installments: Installments(quantity: 12, amount: 204575, rate: 0, currencyID: "COP"))
+    @State var sheetContentHeight = CGFloat(500)
     
-    @State var sheetContentHeight = CGFloat(0)
+    @StateObject var viewModel: SearchBarViewModel
+    
+    init() {
+        self._viewModel = StateObject(wrappedValue: SearchBarViewModel())
+    }
     
     var body: some View {
         ZStack {
             
         }
-        .sheet(isPresented: .constant(true), content: {
-            ItemDetailView(itemData: item)
-                .background {
-                    GeometryReader { proxy in
-                        Color.clear
-                            .task {
-                                print("size = \(proxy.size.height)")
-                                    sheetContentHeight = proxy.size.height
-                            }
-                    }
+        .sheet(item: $viewModel.itemDetail) { item in
+            ItemDetailView(itemData: item) {
+                withAnimation {
+                    viewModel.sheetContentHeight += viewModel.sheetContentHeight
                 }
-                .presentationDetents([.height(sheetContentHeight)])
-        })
+            }
+        }
     }
 }
 

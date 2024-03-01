@@ -8,14 +8,6 @@
 import Foundation
 
 final class ItemDetailViewModel: ObservableObject {
-    
-    //MARK: Variables
-    
-    //MARK: Constants
-    
-    //MARK: init
-    
-    //MARK: Functions
     func calculateDiscountPercentage(originalValue: Double, valueWithDiscount: Double) -> String {
         guard originalValue > valueWithDiscount else {
             return String(format: "%.f", 0.0)
