@@ -52,6 +52,9 @@ struct SearchBarView: View {
         .onReceive(viewModel.$isLoading, perform: { isLoading in
             inAppNotificationsViewModel.showLoadingView = isLoading
         })
+        .sheet(item: $viewModel.itemDetail) { item in
+            ItemDetailView(itemData: item)
+        }
     }
     
     @ViewBuilder
@@ -127,7 +130,11 @@ struct SearchBarView: View {
                     LazyVStack (alignment: .leading) {
                         
                         ForEach(viewModel.searchItemsResults, id: \.self) { searchItemResult in
-                            searchItemResultView(imageUrlString: searchItemResult.thumbnail ?? "", title: searchItemResult.title, price: searchItemResult.price, freeShipping: searchItemResult.shipping?.freeShipping ?? false, installments: searchItemResult.installments)
+                            Button {
+                                viewModel.itemDetail = searchItemResult
+                            } label: {
+                                searchItemResultView(imageUrlString: searchItemResult.thumbnail ?? "", title: searchItemResult.title, price: searchItemResult.price, freeShipping: searchItemResult.shipping?.freeShipping ?? false, installments: searchItemResult.installments)
+                            }
                             
                             if let last = viewModel.searchItemsResults.last, last != searchItemResult {
                                 Divider()

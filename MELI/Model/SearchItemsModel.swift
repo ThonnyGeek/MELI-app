@@ -57,6 +57,7 @@ struct Result: Codable, Identifiable, Hashable {
     let thumbnailID: String?
     let thumbnail: String?
     let price: Double
+    let originalPrice: Double?
     let shipping: Shipping?
     let installments: Installments?
     /*
@@ -70,7 +71,6 @@ struct Result: Codable, Identifiable, Hashable {
      let variationID: String?
      let currencyID: String?
      let orderBackend: Int?
-     let originalPrice: Int?
      let salePrice: JSONNull?
      let availableQuantity: Int?
      let officialStoreID: Int?
@@ -96,6 +96,7 @@ struct Result: Codable, Identifiable, Hashable {
         case price
         case shipping
         case installments
+        case originalPrice = "original_price"
         /*
          case catalogProductID = "catalog_product_id"
          case listingTypeID = "listing_type_id"
@@ -107,7 +108,6 @@ struct Result: Codable, Identifiable, Hashable {
          case variationID = "variation_id"
          case currencyID = "currency_id"
          case orderBackend = "order_backend"
-         case originalPrice = "original_price"
          case salePrice = "sale_price"
          case availableQuantity = "available_quantity"
          case officialStoreID = "official_store_id"

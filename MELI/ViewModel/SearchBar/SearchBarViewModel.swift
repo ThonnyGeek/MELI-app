@@ -16,6 +16,7 @@ final class SearchBarViewModel: ObservableObject {
     @Published var searchItemsResults: [Result] = []
     @Published var isLoading: Bool = false
     @Published var pagingResults: Paging = Paging(total: 0, primaryResults: 0, offset: 0, limit: 50)
+    @Published var itemDetail: Result?
     
     //MARK: Constants
     let mainAppService: MainAppService = MainAppService()
