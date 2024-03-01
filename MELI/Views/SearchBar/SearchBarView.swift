@@ -54,6 +54,16 @@ struct SearchBarView: View {
         })
         .sheet(item: $viewModel.itemDetail) { item in
             ItemDetailView(itemData: item)
+                .background {
+                    GeometryReader { proxy in
+                        Color.clear
+                            .task {
+                                print("size = \(proxy.size.height)")
+                                    viewModel.sheetContentHeight = proxy.size.height
+                            }
+                    }
+                }
+                .presentationDetents([.height(viewModel.sheetContentHeight)])
         }
     }
     
@@ -182,6 +192,7 @@ struct SearchBarView: View {
                     Text("\(title)")
                         .font(.manropeRegular(16))
                         .lineLimit(2)
+                        .multilineTextAlignment(.leading)
                     
                     Text(viewModel.formatAsMoney(price))
                         .font(.manropeSemiBold(20))

@@ -45,8 +45,7 @@
 		851A70FE2B8EED9B0009A488 /* InAppNotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A70FC2B8EED9B0009A488 /* InAppNotificationsViewModel.swift */; };
 		851A71002B8EEDD30009A488 /* InAppNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A70FF2B8EEDD30009A488 /* InAppNotificationModel.swift */; };
 		851A71012B8EEDD30009A488 /* InAppNotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A70FF2B8EEDD30009A488 /* InAppNotificationModel.swift */; };
-		851A71042B8EFDE10009A488 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A71032B8EFDE10009A488 /* SearchBarView.swift */; };
-		851A71052B8EFDE10009A488 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 851A71032B8EFDE10009A488 /* SearchBarView.swift */; };
+		853F5FEF2B919AA000F23A2A /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FEE2B919AA000F23A2A /* SearchBarView.swift */; };
 		857D7A762B91245D00702C77 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D7A752B91245D00702C77 /* LoadingView.swift */; };
 		857D7A792B9177FA00702C77 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D7A782B9177FA00702C77 /* ItemDetailView.swift */; };
 		857D7A7D2B917B1B00702C77 /* ItemDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D7A7C2B917B1B00702C77 /* ItemDetailViewModel.swift */; };
@@ -112,7 +111,7 @@
 		851A70FA2B8EECC00009A488 /* CustomNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNotificationView.swift; sourceTree = "<group>"; };
 		851A70FC2B8EED9B0009A488 /* InAppNotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppNotificationsViewModel.swift; sourceTree = "<group>"; };
 		851A70FF2B8EEDD30009A488 /* InAppNotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppNotificationModel.swift; sourceTree = "<group>"; };
-		851A71032B8EFDE10009A488 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		853F5FEE2B919AA000F23A2A /* SearchBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		857D7A752B91245D00702C77 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		857D7A782B9177FA00702C77 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		857D7A7C2B917B1B00702C77 /* ItemDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailViewModel.swift; sourceTree = "<group>"; };
@@ -370,7 +369,7 @@
 		851A71022B8EFDCA0009A488 /* SearchBar */ = {
 			isa = PBXGroup;
 			children = (
-				851A71032B8EFDE10009A488 /* SearchBarView.swift */,
+				853F5FEE2B919AA000F23A2A /* SearchBarView.swift */,
 			);
 			path = SearchBar;
 			sourceTree = "<group>";
@@ -560,11 +559,11 @@
 				851A709B2B8EBE830009A488 /* Persistence.swift in Sources */,
 				85DB13532B9032E600715E1C /* Font+Extension.swift in Sources */,
 				85DB133B2B8FFD3400715E1C /* SearchBarViewModel.swift in Sources */,
-				851A71042B8EFDE10009A488 /* SearchBarView.swift in Sources */,
 				851A70EB2B8EDDC20009A488 /* API.swift in Sources */,
 				851A70942B8EBE820009A488 /* ContentView.swift in Sources */,
 				857D7A792B9177FA00702C77 /* ItemDetailView.swift in Sources */,
 				85DB13412B90005100715E1C /* MainAppService.swift in Sources */,
+				853F5FEF2B919AA000F23A2A /* SearchBarView.swift in Sources */,
 				851A70F62B8EE2730009A488 /* WelcomeRouter.swift in Sources */,
 				85DB13442B90010600715E1C /* SearchItemsModel.swift in Sources */,
 				851A70D92B8ED8BD0009A488 /* PhotoModelCacheManager.swift in Sources */,
@@ -594,7 +593,6 @@
 				851A70DA2B8ED8BD0009A488 /* PhotoModelCacheManager.swift in Sources */,
 				851A70EF2B8EDE1D0009A488 /* Date+Extension.swift in Sources */,
 				85DB133C2B8FFD3400715E1C /* SearchBarViewModel.swift in Sources */,
-				851A71052B8EFDE10009A488 /* SearchBarView.swift in Sources */,
 				85DB13452B90010600715E1C /* SearchItemsModel.swift in Sources */,
 				851A70A82B8EBE830009A488 /* MELITests.swift in Sources */,
 				851A70E42B8EDA700009A488 /* WelcomeServices.swift in Sources */,

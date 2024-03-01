@@ -13,8 +13,13 @@ struct ItemDetailView: View {
     
     @StateObject var viewModel: ItemDetailViewModel = ItemDetailViewModel()
     
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
-        GeometryReader { geometry in
+        ZStack {
+            Color.white
+                .ignoresSafeArea()
+            
             VStack (spacing: 20) {
                 VStack (alignment: .leading) {
                     title
@@ -27,11 +32,12 @@ struct ItemDetailView: View {
                     
                     Spacer()
                     
-                    VStack (alignment: .leading, spacing: 20) {
+                    VStack (spacing: 20) {
                         if let condition = itemData.condition {
                             Text(condition == "new" ? "Nuevo" : "Usado")
                                 .font(.manropeExtraLight(16))
                                 .foregroundStyle(.black.opacity(0.7))
+                                .padding(.horizontal, 30)
                         }
                         
                         if let freeShipping = itemData.shipping?.freeShipping, freeShipping {
@@ -46,37 +52,23 @@ struct ItemDetailView: View {
                         }
                     }
                 }
-                .frame(width: geometry.size.width * 0.7)
-                
-                priceSection
+                .padding(.horizontal, 50)
                 
                 priceSection
                 
                 buyButton()
             }
-            .frame(width: geometry.size.width * 0.9)
-            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 10)
             .padding(.top, 30)
-            .background {
-                GeometryReader { geometry in
-                    Color.clear
-                        .onAppear {
-                            viewModel.viewHeight = geometry.size.height
-                        }
-                }
-            }
         }
-        .background(.white)
-        .onReceive(viewModel.$viewHeight, perform: { _ in
-            print("viewModel.$viewHeight: \(viewModel.viewHeight)")
-        })
-        .presentationDetents([.height(viewModel.viewHeight + 40)])
     }
     
     private var title: some View {
         Text(itemData.title)
             .font(.manropeSemiBold(20))
             .foregroundStyle(.black)
+            .lineLimit(2)
+            .fixedSize(horizontal: false, vertical: true)
     }
     
     private var priceSection: some View {
@@ -125,6 +117,7 @@ struct ItemDetailView: View {
     @ViewBuilder
     private func buyButton() -> some View {
         Button {
+            dismiss()
         } label: {
             Text("Comprar ahora")
                 .font(.manropeBold(16))
@@ -141,6 +134,32 @@ struct ItemDetailView: View {
     }
 }
 
+struct ItemDetailViewPreview: View {
+    
+    let item = Result(id: "", title: "Apple iPhone 11 (128 Gb) - Blanco Apple iPhone 11 (128 Gb) - Blanco Apple iPhone 11 (128 Gb) - Blanco Apple iPhone 11 (128 Gb) - Blanco", condition: "new", thumbnailID: "", thumbnail: "http://http2.mlstatic.com/D_904849-MLA46153369025_052021-I.jpg", price: 2454900, originalPrice: 3506900, shipping: Shipping(storePickUp: nil, freeShipping: true, logisticType: "", mode: "", tags: nil), installments: Installments(quantity: 12, amount: 204575, rate: 0, currencyID: "COP"))
+    
+    @State var sheetContentHeight = CGFloat(0)
+    
+    var body: some View {
+        ZStack {
+            
+        }
+        .sheet(isPresented: .constant(true), content: {
+            ItemDetailView(itemData: item)
+                .background {
+                    GeometryReader { proxy in
+                        Color.clear
+                            .task {
+                                print("size = \(proxy.size.height)")
+                                    sheetContentHeight = proxy.size.height
+                            }
+                    }
+                }
+                .presentationDetents([.height(sheetContentHeight)])
+        })
+    }
+}
+
 #Preview {
-    ItemDetailView(itemData: Result(id: "", title: "Apple iPhone 11 (128 Gb) - Blanco", condition: "new", thumbnailID: "", thumbnail: "http://http2.mlstatic.com/D_904849-MLA46153369025_052021-I.jpg", price: 2454900, originalPrice: 3506900, shipping: Shipping(storePickUp: nil, freeShipping: true, logisticType: "", mode: "", tags: nil), installments: Installments(quantity: 12, amount: 204575, rate: 0, currencyID: "COP")))
+    ItemDetailViewPreview()
 }

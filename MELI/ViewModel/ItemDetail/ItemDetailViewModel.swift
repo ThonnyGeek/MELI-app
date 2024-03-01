@@ -10,7 +10,6 @@ import Foundation
 final class ItemDetailViewModel: ObservableObject {
     
     //MARK: Variables
-    @Published var viewHeight: CGFloat = 0
     
     //MARK: Constants
     

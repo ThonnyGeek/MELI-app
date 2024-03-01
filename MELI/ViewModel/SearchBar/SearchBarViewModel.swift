@@ -18,6 +18,8 @@ final class SearchBarViewModel: ObservableObject {
     @Published var pagingResults: Paging = Paging(total: 0, primaryResults: 0, offset: 0, limit: 50)
     @Published var itemDetail: Result?
     
+    @Published var sheetContentHeight = CGFloat(0)
+    
     //MARK: Constants
     let mainAppService: MainAppService = MainAppService()
     private var cancellables = Set<AnyCancellable>()
