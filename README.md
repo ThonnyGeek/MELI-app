@@ -1,4 +1,4 @@
-# MELI Mobile Candidate
+# MELI iOS 🍎 Candidate
 
 ## Arquitectura
 El proyecto se ha implementado siguiendo la arquitectura de Modelo-Vista-ViewModel (MVVM). Esta estructura proporciona una separación clara de responsabilidades, facilitando la organización y mantenimiento del código.
