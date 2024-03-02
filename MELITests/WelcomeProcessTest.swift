@@ -10,7 +10,12 @@ import Combine
 
 class MockWelcomeServices: WelcomeServicesProtocol{
     func fetchSites() -> AnyPublisher<SitesModel, NetworkErrorHandler> {
-        Just(SitesModel())
+        Just([
+            SitesModelElement(defaultCurrencyID: "col", id: "1", name: "1"),
+            SitesModelElement(defaultCurrencyID: "usd", id: "2", name: "2"),
+            SitesModelElement(defaultCurrencyID: "col", id: "3", name: "3"),
+            SitesModelElement(defaultCurrencyID: "usd", id: "4", name: "4")
+        ])
             .setFailureType(to: NetworkErrorHandler.self)
             .eraseToAnyPublisher()
     }
@@ -18,8 +23,7 @@ class MockWelcomeServices: WelcomeServicesProtocol{
 
 class MockWelcomeServicesFailure: WelcomeServicesProtocol{
     func fetchSites() -> AnyPublisher<SitesModel, NetworkErrorHandler> {
-        Just(SitesModel())
-            .setFailureType(to: NetworkErrorHandler.self)
+        Fail(error: NetworkErrorHandler.requestFailed)
             .eraseToAnyPublisher()
     }
 }
@@ -57,6 +61,22 @@ final class WelcomeProcessTest: XCTestCase {
         XCTAssertTrue(isAlphabeticallySorted(array: vm.sites))
         XCTAssertFalse(vm.showReloadButton)
         XCTAssertNil(vm.lastApiError)
+    }
+    
+    func test_FailureFetchSites() throws {
+        // Given
+        guard let vm = failureViewModel else {
+            XCTFail()
+            return
+        }
+        
+        //When
+        vm.fetchSites()
+        
+        //Then
+        XCTAssertTrue(vm.sites.isEmpty)
+        XCTAssertTrue(vm.showReloadButton)
+        XCTAssertNotNil(vm.lastApiError)
     }
     
     // Function to check if an array is sorted alphabetically
