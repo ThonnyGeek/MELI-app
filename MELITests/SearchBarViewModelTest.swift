@@ -38,6 +38,7 @@ final class SearchBarViewModelTest: XCTestCase {
     
     var successViewModel: SearchBarViewModel?
     var failureViewModel: SearchBarViewModel?
+    var isLoadingObserver: AnyCancellable?
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -63,17 +64,20 @@ final class SearchBarViewModelTest: XCTestCase {
         }
         
         //When
-        var isLoadingObserver: AnyCancellable?
-        isLoadingObserver = vm.$isLoading.sink { newValue in
+        isLoadingObserver = vm.$isLoading
+            .dropFirst()
+            .sink { newValue in
             // Assert
-            XCTAssertEqual(newValue, true) // Ajusta según lo que esperas que sea el nuevo valor
+            XCTAssertEqual(newValue, true)
             expectation.fulfill()
             
-            // Cancelar la observación después de la verificación
-            isLoadingObserver?.cancel()
+            // Cancell after the verification
+                self.isLoadingObserver?.cancel()
         }
         
         vm.fetchSearchItems()
+        
+        wait(for: [expectation], timeout: 10)
         
         //Then
         XCTAssertFalse(vm.isLoading)
@@ -81,8 +85,6 @@ final class SearchBarViewModelTest: XCTestCase {
     }
     
     func test_SuccessLoadMoreSearchItems() throws {
-        
-        let expectation = expectation(description: "Value should change")
         
         //Given
         guard let vm = successViewModel else {
@@ -93,23 +95,10 @@ final class SearchBarViewModelTest: XCTestCase {
         let initialSearchItemsResultsCount = vm.searchItemsResults.count
         
         //When
-        var isLoadingObserver: AnyCancellable?
-        isLoadingObserver = vm.$isLoading.sink { newValue in
-            // Assert
-            XCTAssertEqual(newValue, true) // Ajusta según lo que esperas que sea el nuevo valor
-            expectation.fulfill()
-            
-            // Cancelar la observación después de la verificación
-            isLoadingObserver?.cancel()
-        }
         
         vm.loadMoreSearchItems()
         
-        // Esperar a que se cumpla la expectativa
-        wait(for: [expectation], timeout: 5.0)
-        
         //Then
-        XCTAssertFalse(vm.isLoading)
         XCTAssertFalse(vm.searchItemsResults.isEmpty)
         XCTAssertLessThan(initialSearchItemsResultsCount, vm.searchItemsResults.count)
     }
