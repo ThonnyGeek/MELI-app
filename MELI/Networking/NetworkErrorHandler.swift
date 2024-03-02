@@ -71,7 +71,7 @@ enum NetworkErrorHandler: Error, Equatable {
 //    var selfName: String {
 //        switch self {
 //        case .APIError(let aPIError):
-//            return "API Error"
+//            return "APIClient Error"
 //        case .customError(let aPIError):
 //            return "Custom Error"
 //        case .requestFailed:

@@ -48,6 +48,12 @@
 		853F5FF12B91AB1200F23A2A /* UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FF02B91AB1200F23A2A /* UIWindow.swift */; };
 		853F5FF32B92924C00F23A2A /* MELIMainButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FF22B92924C00F23A2A /* MELIMainButtonStyle.swift */; };
 		853F5FF52B9297F800F23A2A /* ReloadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FF42B9297F800F23A2A /* ReloadButton.swift */; };
+		853F5FF72B92C46200F23A2A /* AppDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FF62B92C46200F23A2A /* AppDependency.swift */; };
+		853F5FFD2B92CD3800F23A2A /* WelcomeProcessTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FFC2B92CD3800F23A2A /* WelcomeProcessTest.swift */; };
+		853F5FFF2B92D42E00F23A2A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FFE2B92D42E00F23A2A /* Constants.swift */; };
+		853F60002B92D42E00F23A2A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F5FFE2B92D42E00F23A2A /* Constants.swift */; };
+		853F60022B92D4FB00F23A2A /* MELIBasicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F60012B92D4FB00F23A2A /* MELIBasicViewModel.swift */; };
+		853F60032B92D4FB00F23A2A /* MELIBasicViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853F60012B92D4FB00F23A2A /* MELIBasicViewModel.swift */; };
 		857D7A762B91245D00702C77 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D7A752B91245D00702C77 /* LoadingView.swift */; };
 		857D7A792B9177FA00702C77 /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D7A782B9177FA00702C77 /* ItemDetailView.swift */; };
 		857D7A7D2B917B1B00702C77 /* ItemDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857D7A7C2B917B1B00702C77 /* ItemDetailViewModel.swift */; };
@@ -116,6 +122,10 @@
 		853F5FF02B91AB1200F23A2A /* UIWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindow.swift; sourceTree = "<group>"; };
 		853F5FF22B92924C00F23A2A /* MELIMainButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MELIMainButtonStyle.swift; sourceTree = "<group>"; };
 		853F5FF42B9297F800F23A2A /* ReloadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReloadButton.swift; sourceTree = "<group>"; };
+		853F5FF62B92C46200F23A2A /* AppDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDependency.swift; sourceTree = "<group>"; };
+		853F5FFC2B92CD3800F23A2A /* WelcomeProcessTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeProcessTest.swift; sourceTree = "<group>"; };
+		853F5FFE2B92D42E00F23A2A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		853F60012B92D4FB00F23A2A /* MELIBasicViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MELIBasicViewModel.swift; sourceTree = "<group>"; };
 		857D7A752B91245D00702C77 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		857D7A782B9177FA00702C77 /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		857D7A7C2B917B1B00702C77 /* ItemDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailViewModel.swift; sourceTree = "<group>"; };
@@ -206,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				851A70A72B8EBE830009A488 /* MELITests.swift */,
+				853F5FFC2B92CD3800F23A2A /* WelcomeProcessTest.swift */,
 			);
 			path = MELITests;
 			sourceTree = "<group>";
@@ -243,8 +254,10 @@
 		851A70C42B8EC2E40009A488 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				853F5FFE2B92D42E00F23A2A /* Constants.swift */,
 				851A70912B8EBE820009A488 /* MELIApp.swift */,
 				851A709C2B8EBE830009A488 /* MELI.xcdatamodeld */,
+				853F5FF62B92C46200F23A2A /* AppDependency.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -303,6 +316,7 @@
 		851A70D42B8ED8540009A488 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				853F60012B92D4FB00F23A2A /* MELIBasicViewModel.swift */,
 				857D7A7A2B917AFC00702C77 /* ItemDetail */,
 				85DB13392B8FFD1300715E1C /* SearchBar */,
 				851A70DB2B8ED9CD0009A488 /* Utils */,
@@ -552,6 +566,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				853F5FF52B9297F800F23A2A /* ReloadButton.swift in Sources */,
+				853F5FFF2B92D42E00F23A2A /* Constants.swift in Sources */,
 				851A70C22B8EBFDA0009A488 /* WelcomeView.swift in Sources */,
 				851A70DE2B8ED9E80009A488 /* WelcomeViewModel.swift in Sources */,
 				851A70F22B8EE2350009A488 /* NetworkRouter.swift in Sources */,
@@ -562,9 +577,11 @@
 				851A70D62B8ED87B0009A488 /* ImageLoadingViewModel.swift in Sources */,
 				857D7A762B91245D00702C77 /* LoadingView.swift in Sources */,
 				851A70CD2B8ED5610009A488 /* SitesModel.swift in Sources */,
+				853F60022B92D4FB00F23A2A /* MELIBasicViewModel.swift in Sources */,
 				857D7A7D2B917B1B00702C77 /* ItemDetailViewModel.swift in Sources */,
 				851A709B2B8EBE830009A488 /* Persistence.swift in Sources */,
 				85DB13532B9032E600715E1C /* Font+Extension.swift in Sources */,
+				853F5FF72B92C46200F23A2A /* AppDependency.swift in Sources */,
 				85DB133B2B8FFD3400715E1C /* SearchBarViewModel.swift in Sources */,
 				851A70EB2B8EDDC20009A488 /* API.swift in Sources */,
 				857D7A792B9177FA00702C77 /* ItemDetailView.swift in Sources */,
@@ -597,12 +614,15 @@
 				851A70E92B8EDB370009A488 /* NetworkErrorHandler.swift in Sources */,
 				851A71012B8EEDD30009A488 /* InAppNotificationModel.swift in Sources */,
 				851A70FE2B8EED9B0009A488 /* InAppNotificationsViewModel.swift in Sources */,
+				853F5FFD2B92CD3800F23A2A /* WelcomeProcessTest.swift in Sources */,
+				853F60032B92D4FB00F23A2A /* MELIBasicViewModel.swift in Sources */,
 				851A70CE2B8ED5610009A488 /* SitesModel.swift in Sources */,
 				851A70DA2B8ED8BD0009A488 /* PhotoModelCacheManager.swift in Sources */,
 				851A70EF2B8EDE1D0009A488 /* Date+Extension.swift in Sources */,
 				85DB133C2B8FFD3400715E1C /* SearchBarViewModel.swift in Sources */,
 				85DB13452B90010600715E1C /* SearchItemsModel.swift in Sources */,
 				851A70A82B8EBE830009A488 /* MELITests.swift in Sources */,
+				853F60002B92D42E00F23A2A /* Constants.swift in Sources */,
 				851A70E42B8EDA700009A488 /* WelcomeServices.swift in Sources */,
 				851A70EC2B8EDDC20009A488 /* API.swift in Sources */,
 				85DB133F2B8FFD8500715E1C /* MainAppRouter.swift in Sources */,

@@ -9,7 +9,14 @@ import SwiftUI
 
 struct WelcomeView: View {
     
-    @StateObject var viewModel: WelcomeViewModel = WelcomeViewModel()
+    @StateObject var viewModel: WelcomeViewModel
+    
+    let mainAppService: MainAppServiceProtocol
+
+    init(mainAppService: MainAppServiceProtocol, welcomeServices: WelcomeServicesProtocol) {
+        _viewModel = StateObject(wrappedValue: WelcomeViewModel(welcomeServices: welcomeServices))
+        self.mainAppService = mainAppService
+    }
     
     @EnvironmentObject var inAppNotificationsViewModel: InAppNotificationsViewModel
     
@@ -35,7 +42,7 @@ struct WelcomeView: View {
                     
                     if viewModel.showReloadButton {
                         ReloadButton {
-                            viewModel.fetchSites()
+                            viewModel.reloadButtonTapAction()
                         }
                     }
                 }
@@ -59,7 +66,7 @@ struct WelcomeView: View {
                 VStack {
                     ForEach(viewModel.sites, id: \.self) { site in
                         
-                        NavigationLink(destination: SearchBarView().navigationBarBackButtonHidden().onAppear {siteIdAppStorage = site.id}) {
+                        NavigationLink(destination: SearchBarView(mainAppService: mainAppService).navigationBarBackButtonHidden().onAppear {siteIdAppStorage = site.id}) {
                             listButton(site.name, image: site.id.dropFirst().description)
                         }
                         
@@ -102,6 +109,6 @@ struct WelcomeView: View {
 }
 
 #Preview {
-    WelcomeView()
+    WelcomeView(mainAppService: MainAppService(client: APIClient()), welcomeServices: WelcomeServices(client: APIClient()))
         .environmentObject(InAppNotificationsViewModel())
 }

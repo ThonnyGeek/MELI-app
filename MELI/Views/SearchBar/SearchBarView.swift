@@ -9,7 +9,11 @@ import SwiftUI
 
 struct SearchBarView: View {
     
-    @StateObject var viewModel: SearchBarViewModel = SearchBarViewModel()
+    @StateObject var viewModel: SearchBarViewModel
+    
+    init(mainAppService: MainAppServiceProtocol) {
+        _viewModel = StateObject(wrappedValue: SearchBarViewModel(mainAppService: mainAppService))
+    }
     
     @AppStorage("site_id") var siteIdAppStorage: String?
     
@@ -206,6 +210,6 @@ struct SearchBarView: View {
 
 #Preview {
 //    SearchBarView().seachItemsListView()
-        WelcomeView()
+    WelcomeView(mainAppService: MainAppService(client: APIClient()), welcomeServices: WelcomeServices(client: APIClient()))
         .environmentObject(InAppNotificationsViewModel())
 }

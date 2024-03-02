@@ -25,7 +25,7 @@ enum WelcomeRouter: NetworkRouter {
     }
     
     func asURLRequest() -> URLRequest? {
-        guard let baseURL = URL(string: API.shared.baseURL + path) else {
+        guard let baseURL = URL(string: Constants.baseURL + path) else {
                 return nil
         }
 

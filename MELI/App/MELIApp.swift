@@ -9,11 +9,14 @@ import SwiftUI
 
 @main
 struct MELIApp: App {
+    
+    let dependencies = AppDependency()
+    
     @StateObject var inAppNotificationsViewModel: InAppNotificationsViewModel = InAppNotificationsViewModel()
 
     var body: some Scene {
         WindowGroup {
-            WelcomeView()
+            WelcomeView(mainAppService: dependencies.mainAppService, welcomeServices: dependencies.welcomeServices)
                 .overlay {
                     InAppNotificationsView()
                     

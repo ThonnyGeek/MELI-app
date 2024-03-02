@@ -191,7 +191,7 @@ struct ItemDetailViewPreview: View {
     @StateObject var viewModel: SearchBarViewModel
     
     init() {
-        self._viewModel = StateObject(wrappedValue: SearchBarViewModel())
+        self._viewModel = StateObject(wrappedValue: SearchBarViewModel(mainAppService: MainAppService(client: APIClient())))
     }
     
     var body: some View {
@@ -199,11 +199,7 @@ struct ItemDetailViewPreview: View {
             
         }
         .sheet(item: $viewModel.itemDetail) { item in
-            ItemDetailView(itemData: item) {
-                withAnimation {
-                    viewModel.sheetContentHeight += viewModel.sheetContentHeight
-                }
-            }
+            ItemDetailView(itemData: item) 
         }
     }
 }

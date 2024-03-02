@@ -8,7 +8,11 @@
 import Foundation
 
 // MARK: - SitesModelElement
-struct SitesModelElement: Codable, Hashable {
+struct SitesModelElement: Codable, Hashable, Comparable {
+    static func < (lhs: SitesModelElement, rhs: SitesModelElement) -> Bool {
+        lhs.name < rhs.name
+    }
+    
     let defaultCurrencyID, id, name: String
 
     enum CodingKeys: String, CodingKey {

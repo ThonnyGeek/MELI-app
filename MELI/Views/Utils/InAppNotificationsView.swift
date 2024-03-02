@@ -43,7 +43,7 @@ struct PreviewView: View {
             VStack {
                 
                 Button {
-                    viewModel.showError("sdds", subtitle: "La solicitud ha tardado demasiado en completarse debido a problemas con el servidor de la API.")
+                    viewModel.showError("sdds", subtitle: "La solicitud ha tardado demasiado en completarse debido a problemas con el servidor de la APIClient.")
                 } label: {
                     Text("88888d8d8d8d")
                         .foregroundStyle(.black)

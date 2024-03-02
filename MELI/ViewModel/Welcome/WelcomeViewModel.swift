@@ -9,10 +9,16 @@ import Foundation
 import Combine
 import SwiftUI
 
-final class WelcomeViewModel: ObservableObject {
+final class WelcomeViewModel: ObservableObject, MELIBasicViewModel {
     
     //MARK: Variables
-    @Published var sites: [SitesModelElement] = []
+    @Published var sites: [SitesModelElement] = [] {
+        didSet {
+            if !sites.isEmpty {
+                showReloadButton = false
+            }
+        }
+    }
     
     @Published var lastApiError: NetworkErrorHandler?
     
@@ -21,10 +27,13 @@ final class WelcomeViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     //MARK: Constants
-    let welcomeServices: WelcomeServices = WelcomeServices()
+    let welcomeServices: WelcomeServicesProtocol
     
     //MARK: init
-    init() {
+    init(welcomeServices: WelcomeServicesProtocol) {
+        
+        self.welcomeServices = welcomeServices
+        
         /// Adding startup "animation": Waits 1 sec to make the call
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.fetchSites()
@@ -33,13 +42,13 @@ final class WelcomeViewModel: ObservableObject {
     
     //MARK: Functions
     func fetchSites() {
-        print("viewModel.fetchSites()")
         welcomeServices.fetchSites()
             .sink { [weak self] completion in
-                guard let apiError = API.shared.onReceive(completion) else {
+                guard let apiError = self?.onReceive(completion) else {
                     return
                 }
                 self?.lastApiError = apiError
+                self?.showReloadButton = true
             } receiveValue: { [weak self] sitesValue in
                 guard let self = self else { return }
                 withAnimation {
@@ -47,5 +56,10 @@ final class WelcomeViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    func reloadButtonTapAction() {
+        showReloadButton = false
+        fetchSites()
     }
 }

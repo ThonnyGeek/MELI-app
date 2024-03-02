@@ -1,9 +1,8 @@
 //
 //  ImageLoadingViewModel.swift
-//  TodoServy
+//  MELI
 //
 //  Created by Thony Gonzalez on 22/02/24.
-//  Copyright © 2024 Magora. All rights reserved.
 //
 
 import Foundation

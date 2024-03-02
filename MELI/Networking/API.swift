@@ -1,5 +1,5 @@
 //
-//  API.swift
+//  APIClient.swift
 //  MELI
 //
 //  Created by Thony Gonzalez on 27/02/24.
@@ -8,13 +8,9 @@
 import Foundation
 import Combine
 
-struct API {
-    static let shared = API() /// API Singleton
-    
-    let baseURL: String = "https://api.mercadolibre.com"
-    
+struct APIClient {
     @discardableResult
-    /// Here we handle API errors
+    /// Here we handle APIClient errors
     func publisher<T>(_ request: URLRequest?, decodingType: T.Type) -> AnyPublisher<T, NetworkErrorHandler> where T: Decodable {
         
         guard let newRequest = request else {
@@ -50,19 +46,8 @@ struct API {
             })
         /// Timeout to cancel the request if it has a long response time
             .timeout(10, scheduler: DispatchQueue.main, customError: {
-                NetworkErrorHandler.APIError(APIError(error: "Request cancelled", message: "The request took too long to complete due to issues with the API server"))
+                NetworkErrorHandler.APIError(APIError(error: "Request cancelled", message: "The request took too long to complete due to issues with the APIClient server"))
             })
             .eraseToAnyPublisher()
-    }
-    
-    /// To handle completion
-    func onReceive(_ completion: Subscribers.Completion<NetworkErrorHandler>) -> NetworkErrorHandler? {
-        switch completion {
-        case .finished:
-            print("API call finished")
-            return nil
-        case .failure(let failure):
-            return failure
-        }
     }
 }
