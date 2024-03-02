@@ -58,6 +58,11 @@ struct SearchBarView: View {
         .onReceive(viewModel.$isLoading, perform: { isLoading in
             inAppNotificationsViewModel.showLoadingView = isLoading
         })
+        .onReceive(viewModel.$lastApiError, perform: { apiError in
+            guard let apiError = apiError else { return }
+            print("apiError: \(apiError)")
+            inAppNotificationsViewModel.showError(apiError.apiErrorDescription.error, subtitle: apiError.apiErrorDescription.message)
+        })
         .sheet(item: $viewModel.itemDetail) { item in
             ItemDetailView(itemData: item) 
         }
@@ -74,9 +79,7 @@ struct SearchBarView: View {
                     .onSubmit {
                         viewModel.hideKeyboard()
                         if !viewModel.searchBarText.isEmpty {
-                            viewModel.fetchSearchItems { apiError in
-                                inAppNotificationsViewModel.showError(apiError.apiErrorDescription.error, subtitle: apiError.apiErrorDescription.message)
-                            }
+                            viewModel.fetchSearchItems()
                         } else {
                             inAppNotificationsViewModel.showError("Campo vacío", subtitle: "El campo de búsqueda debe contener al menos 1 caracter")
                         }
@@ -104,9 +107,7 @@ struct SearchBarView: View {
                     viewModel.hideKeyboard()
                     
                     if !viewModel.searchBarText.isEmpty {
-                        viewModel.fetchSearchItems { apiError in
-                            inAppNotificationsViewModel.showError(apiError.apiErrorDescription.error, subtitle: apiError.apiErrorDescription.message)
-                        }
+                        viewModel.fetchSearchItems()
                     } else {
                         inAppNotificationsViewModel.showError("Campo vacío", subtitle: "El campo de búsqueda debe contener al menos 1 caracter")
                     }
@@ -142,9 +143,7 @@ struct SearchBarView: View {
                             ProgressView()
                                 .frame(maxWidth: .infinity)
                                 .onAppear {
-                                    viewModel.loadMoreSearchItems { apiError in
-                                        inAppNotificationsViewModel.showError(apiError.apiErrorDescription.error, subtitle: apiError.apiErrorDescription.message)
-                                    }
+                                    viewModel.loadMoreSearchItems()
                                 }
                         }
                     }

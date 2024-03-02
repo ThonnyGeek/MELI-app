@@ -18,7 +18,7 @@ final class SearchBarViewModel: ObservableObject, MELIBasicViewModel {
     @Published var pagingResults: Paging = Paging(total: 0, primaryResults: 0, offset: 0, limit: 50)
     @Published var itemDetail: Result?
     
-    @Published var sheetContentHeight = CGFloat(0)
+    @Published var lastApiError: NetworkErrorHandler?
     
     //MARK: Constants
     let mainAppService: MainAppServiceProtocol// = MainAppService()
@@ -30,34 +30,33 @@ final class SearchBarViewModel: ObservableObject, MELIBasicViewModel {
     }
     
     //MARK: Functions
-    func fetchSearchItems(onFail: ((_ apiError: NetworkErrorHandler) -> Void)? = nil) {
+    func fetchSearchItems() {
         isLoading = true
         mainAppService.fetchSearchItems(query: searchBarText)
             .sink { [weak self] completion in
                 
                 self?.isLoading = false
                 
-                guard let apiError = self?.onReceive(completion), let onFail = onFail else {
+                guard let apiError = self?.onReceive(completion) else {
                     return
                 }
-                onFail(apiError)
+                self?.lastApiError = apiError
             } receiveValue: { [weak self] returnedSearchItemsModel in
                 
                 self?.isLoading = false
                 
-                print("returnedSearchItemsModel: \(returnedSearchItemsModel)")
-                guard let self = self, let returnedSearchItemsModelResults = returnedSearchItemsModel.results else {
-                    print("ERROR")
+                guard let returnedSearchItemsModelResults = returnedSearchItemsModel.results else {
+                    self?.lastApiError = .customError(APIError(error: "Error al realizar la búsqueda", message: "Por favor intenta de nuevo"))
                     return
                 }
                 
-                self.pagingResults = returnedSearchItemsModel.paging
+                self?.pagingResults = returnedSearchItemsModel.paging
                 
-                if returnedSearchItemsModelResults.isEmpty, let onFail = onFail {
-                    onFail(NetworkErrorHandler.customError(APIError(error: "Búsqueda sin resultados", message: "Por favor intenta con otra palabra")))
+                if returnedSearchItemsModelResults.isEmpty {
+                    self?.lastApiError = .customError(APIError(error: "Búsqueda sin resultados", message: "Por favor intenta con otra palabra"))
                 } else {
                     withAnimation {
-                        self.searchItemsResults = returnedSearchItemsModelResults
+                        self?.searchItemsResults = returnedSearchItemsModelResults
                     }
                 }
             }
@@ -65,7 +64,7 @@ final class SearchBarViewModel: ObservableObject, MELIBasicViewModel {
         
     }
     
-    func loadMoreSearchItems(onFail: ((_ apiError: NetworkErrorHandler) -> Void)? = nil) {
+    func loadMoreSearchItems() {
         
         var offset = 0
         
@@ -74,25 +73,21 @@ final class SearchBarViewModel: ObservableObject, MELIBasicViewModel {
         } else {
             offset = pagingResults.offset + 50
         }
-        print("query: \(searchBarText), offset: \(offset)")
-        print("pagingResults: \(pagingResults)")
-        print("searchItemsResults.count: \(searchItemsResults.count)")
-        
         
         mainAppService.loadMoreSearchItems(query: searchBarText, offset: "\(offset)")
             .sink { [weak self] completion in
-                guard let apiError = self?.onReceive(completion), let onFail = onFail else {
+                guard let apiError = self?.onReceive(completion) else {
                     return
                 }
-                onFail(apiError)
+                self?.lastApiError = apiError
             } receiveValue: { [weak self] returnedSearchItemsModel in
                 guard let self = self, let returnedSearchItemsModelResults = returnedSearchItemsModel.results else {
-                    print("ERROR")
+                    self?.lastApiError = .customError(APIError(error: "Búsqueda sin resultados", message: "Por favor intenta con otra palabra"))
                     return
                 }
                 
-                if returnedSearchItemsModelResults.isEmpty, let onFail = onFail {
-                    onFail(NetworkErrorHandler.customError(APIError(error: "Búsqueda sin resultados", message: "Por favor intenta con otra palabra")))
+                if returnedSearchItemsModelResults.isEmpty {
+                    self.lastApiError = .customError(APIError(error: "Búsqueda sin resultados", message: "Por favor intenta con otra palabra"))
                 } else {
                     withAnimation {
                         self.searchItemsResults.append(contentsOf: returnedSearchItemsModelResults)
