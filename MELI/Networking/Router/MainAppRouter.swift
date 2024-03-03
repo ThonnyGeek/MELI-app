@@ -10,6 +10,7 @@ import Foundation
 enum MainAppRouter: NetworkRouter {
     case fetchItemListByQuery(query: String)
     case loadMoreItemListByQuery(query: String, offset: String)
+    case getItemDetail(id: String)
     
     var path: String {
         switch self {
@@ -19,12 +20,14 @@ enum MainAppRouter: NetworkRouter {
             } else {
                 return "/sites/MCO/search"
             }
+        case .getItemDetail:
+            return "/items"
         }
     }
     
     var method: HTTPsMethod {
         switch self {
-        case .fetchItemListByQuery, .loadMoreItemListByQuery:
+        case .fetchItemListByQuery, .loadMoreItemListByQuery, .getItemDetail:
             return .get
         }
     }
@@ -55,6 +58,19 @@ enum MainAppRouter: NetworkRouter {
                 URLQueryItem(name: "q", value: query),
                 URLQueryItem(name: "offset", value: offset)
             ]
+            
+            guard let finalURL = components?.url else {
+                return nil
+            }
+
+            var request = URLRequest(url: finalURL)
+            request.cachePolicy = .useProtocolCachePolicy
+            request.httpMethod = method.rawValue
+            return request
+            
+        case .getItemDetail(let id):
+            var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
+            components?.queryItems = [URLQueryItem(name: "ids", value: id)]
             
             guard let finalURL = components?.url else {
                 return nil

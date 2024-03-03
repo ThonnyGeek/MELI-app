@@ -11,8 +11,11 @@ struct SearchBarView: View {
     
     @StateObject var viewModel: SearchBarViewModel
     
+    let mainAppService: MainAppServiceProtocol
+    
     init(mainAppService: MainAppServiceProtocol) {
         _viewModel = StateObject(wrappedValue: SearchBarViewModel(mainAppService: mainAppService))
+        self.mainAppService = mainAppService
     }
     
     @AppStorage("site_id") var siteIdAppStorage: String?
@@ -64,7 +67,11 @@ struct SearchBarView: View {
             inAppNotificationsViewModel.showError(apiError.apiErrorDescription.error, subtitle: apiError.apiErrorDescription.message)
         })
         .sheet(item: $viewModel.itemDetail) { item in
-            ItemDetailView(itemData: item) 
+            ItemDetailView(mainAppService: mainAppService, itemId: item.id, itemInstallments: item.installments) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    viewModel.itemDetail = item
+                }
+            }
         }
     }
     
