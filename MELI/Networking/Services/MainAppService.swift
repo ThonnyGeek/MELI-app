@@ -11,6 +11,7 @@ import Combine
 protocol MainAppServiceProtocol {
     func fetchSearchItems(query: String) -> AnyPublisher<SearchItemsModel, NetworkErrorHandler>
     func loadMoreSearchItems(query: String, offset: String) -> AnyPublisher<SearchItemsModel, NetworkErrorHandler>
+    func getItemDetail(id: String) -> AnyPublisher<ItemDetailsModelElement?, NetworkErrorHandler>
 }
 
 class MainAppService {
@@ -31,6 +32,14 @@ extension MainAppService: MainAppServiceProtocol {
     
     func loadMoreSearchItems(query: String, offset: String) -> AnyPublisher<SearchItemsModel, NetworkErrorHandler> {
         return client.publisher(MainAppRouter.loadMoreItemListByQuery(query: query, offset: offset).asURLRequest(), decodingType: SearchItemsModel.self)
+            .subscribe(on: DispatchQueue.global(qos: .background))
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func getItemDetail(id: String) -> AnyPublisher<ItemDetailsModelElement?, NetworkErrorHandler> {
+        return client.publisher(MainAppRouter.getItemDetail(id: id).asURLRequest(), decodingType: ItemDetailsModel.self)
+            .map { $0.first }
             .subscribe(on: DispatchQueue.global(qos: .background))
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()

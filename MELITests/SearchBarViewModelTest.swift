@@ -20,15 +20,33 @@ class MockMainAppService: MainAppServiceProtocol {
             .setFailureType(to: NetworkErrorHandler.self)
             .eraseToAnyPublisher()
     }
+    
+    func getItemDetail(id: String) -> AnyPublisher<ItemDetailsModelElement?, NetworkErrorHandler> {
+        let pics = [
+            Picture(id: "2", url: "", secureURL: "https://http2.mlstatic.com/D_631993-MLA46153270440_052021-O.jpg", size: "", maxSize: "", quality: ""),
+            Picture(id: "1", url: "", secureURL: "https://http2.mlstatic.com/D_904849-MLA46153369025_052021-O.jpg", size: "", maxSize: "", quality: ""),
+            Picture(id: "3", url: "", secureURL: "https://http2.mlstatic.com/D_851350-MLA46153270441_052021-O.jpg", size: "", maxSize: "", quality: "")
+        ]
+        
+        return Just(ItemDetailsModelElement(code: 200, body: ItemDetailBody(id: "MCO909960201", message: nil, title: "Apple iPhone 11 (128 Gb) - Blanco", price: 2454000, originalPrice: 3506900, condition: "new", thumbnailID: "904849-MLA46153369025_052021", thumbnail: "http://http2.mlstatic.com/D_904849-MLA46153369025_052021-I.jpg", pictures: pics, shipping: nil, attributes: nil)))
+            .setFailureType(to: NetworkErrorHandler.self)
+            .eraseToAnyPublisher()
+    }
 }
 
 class FailureMockMainAppService: MainAppServiceProtocol {
+    
     func fetchSearchItems(query: String) -> AnyPublisher<SearchItemsModel, NetworkErrorHandler> {
         Fail(error: NetworkErrorHandler.invalidURL)
             .eraseToAnyPublisher()
     }
     
     func loadMoreSearchItems(query: String, offset: String) -> AnyPublisher<SearchItemsModel, NetworkErrorHandler> {
+        Fail(error: NetworkErrorHandler.invalidURL)
+            .eraseToAnyPublisher()
+    }
+    
+    func getItemDetail(id: String) -> AnyPublisher<ItemDetailsModelElement?, NetworkErrorHandler> {
         Fail(error: NetworkErrorHandler.invalidURL)
             .eraseToAnyPublisher()
     }

@@ -6,8 +6,27 @@
 //
 
 import Foundation
+import Combine
 
-final class ItemDetailViewModel: ObservableObject {
+final class ItemDetailViewModel: ObservableObject, MELIBasicViewModel {
+    //MARK: Variables
+    @Published var lastApiError: NetworkErrorHandler?
+    private var cancellables = Set<AnyCancellable>()
+    @Published var itemDetailData: ItemDetailBody?
+    @Published var showPicsView: Bool = false
+    
+    //MARK: Constants
+    let mainAppService: MainAppServiceProtocol
+    let itemId: String
+    
+    //MARK: init
+    init(mainAppService: MainAppServiceProtocol, itemId: String) {
+        self.mainAppService = mainAppService
+        self.itemId = itemId
+        getItemDetail()
+    }
+    
+    //MARK: Functions
     func calculateDiscountPercentage(originalValue: Double, valueWithDiscount: Double) -> String {
         guard originalValue > valueWithDiscount else {
             return String(format: "%.f", 0.0)
@@ -30,4 +49,22 @@ final class ItemDetailViewModel: ObservableObject {
         
         return result
     }
+    
+    func getItemDetail() {
+        mainAppService.getItemDetail(id: itemId)
+            .sink { [weak self] completion in
+                guard let apiError = self?.onReceive(completion) else {
+                    return
+                }
+                self?.lastApiError = apiError
+            } receiveValue: { [weak self] returnedItemDetail in
+                guard let returnedItemDetail = returnedItemDetail else {
+                    self?.lastApiError = .customError(APIError(error: "Error al obtener item detail", message: "Por favor intentalo nuevamente"))
+                    return
+                }
+                self?.itemDetailData = returnedItemDetail.body
+            }
+            .store(in: &cancellables)
+    }
 }
+
