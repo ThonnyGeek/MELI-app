@@ -16,3 +16,5 @@ El 90% de la interfaz de usuario (UI) se ha desarrollado utilizando SwiftUI, apr
 - **Selección de País en Pantalla de Inicio:** Se ha añadido una pantalla inicial que permite al usuario elegir el país (SITE_ID) para realizar la búsqueda de ítems, brindando una experiencia personalizada.
 
 - **Carga de Información de Ítems:** En el momento de la notificación sobre la subida del proyecto, la carga de información de los ítems se realiza utilizando los datos proporcionados por la búsqueda, en lugar de cargarlos de forma individual, lo que evita que se tenga carrete de fotos. Consideré implementar la carga individual en una actualizacion post aviso de subida.
+
+(Editado: el último punto mencionado ya fue resuelto 😊
